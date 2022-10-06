@@ -6,8 +6,7 @@ const rateLimit = require("express-rate-limit");
 const boolParser = require("express-query-boolean");
 const helmet = require("helmet");
 
-// const swaggerUi = require("swagger-ui-express");
-// const swaggerDocument = require("./swagger/swagger.json");
+
 
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
@@ -52,7 +51,6 @@ app.use(
 app.use(express.json({ limit: 100000 }));
 app.use(boolParser());
 
-// app.use("/api", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -64,7 +62,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: "http://localhost:3000",
+      url: "http://localhost: ...",
       description: "Development server",
     },
   ],
@@ -73,7 +71,8 @@ const swaggerDefinition = {
 const options = {
   swaggerDefinition,
   // Paths to files containing OpenAPI definitions
-  apis: ["./routes/cardsRoutes/*.js"],
+  apis: ["./routes/cardsRoutes/*.js",
+    "./routes/usersRoutes/*.js"],
 };
 
 const specs = swaggerJsDoc(options);
