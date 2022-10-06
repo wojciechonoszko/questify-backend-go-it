@@ -6,8 +6,11 @@ const rateLimit = require("express-rate-limit");
 const boolParser = require("express-query-boolean");
 const helmet = require("helmet");
 
-const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("./swagger/swagger.json");
+// const swaggerUi = require("swagger-ui-express");
+// const swaggerDocument = require("./swagger/swagger.json");
+
+const swaggerUI = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
 
 const { httpStatusCodes } = require("./helpers/httpstatuscodes.js");
 
@@ -49,7 +52,33 @@ app.use(
 app.use(express.json({ limit: 100000 }));
 app.use(boolParser());
 
-app.use("/api", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use("/api", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+const swaggerDefinition = {
+  openapi: "3.0.0",
+  info: {
+    title: "Questify-GO-IT",
+    version: "1.0.0",
+    description:
+      "This is a REST API application made with Express. It retrieves data from JSONPlaceholder.",
+  },
+  servers: [
+    {
+      url: "http://localhost:3000",
+      description: "Development server",
+    },
+  ],
+};
+
+const options = {
+  swaggerDefinition,
+  // Paths to files containing OpenAPI definitions
+  apis: ["./routes/cardsRoutes/*.js"],
+};
+
+const specs = swaggerJsDoc(options);
+
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.use("/users", usersRouter);
 app.use("/cards", cardsRouter);
