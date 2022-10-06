@@ -1,5 +1,5 @@
 const PRODUCTION_URL = "https://localhost:8155";
-const EMAIL_TO_VERIFY = "wojono@o2.pl";
+const EMAIL_TO_VERIFY = "wojciechonoszko@gmail.com";
 
 const SALT_FACTOR = 6;
 
