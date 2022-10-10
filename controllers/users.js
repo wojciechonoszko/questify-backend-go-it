@@ -68,7 +68,7 @@ const login = async (req, res, next) => {
 };
 
 const logout = async (req, res, next) => {
-  const id = req.user.id;
+  const id = req.user;
   await authService.logout(id);
   return res.status(httpStatusCodes.NO_CONTENT).json({});
 };
