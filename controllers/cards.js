@@ -85,7 +85,8 @@ const getCardById = async (req, res, next) => {
 
 const addCard = async (req, res, next) => {
   try {
-    const userId = req.user?.id;
+    const userId = req.users?._id.toString();
+    console.log(userId);
     const {
       id,
       text,
@@ -94,7 +95,7 @@ const addCard = async (req, res, next) => {
       difficulty,
       category,
       deadline,
-    } = await cardsService.create(userId, req.body);
+    } = await cardsService.create( userId , req.body);
     res.status(httpStatusCodes.CREATED).json({
       status: "success",
       code: httpStatusCodes.CREATED,
