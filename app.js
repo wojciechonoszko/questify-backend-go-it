@@ -16,6 +16,8 @@ const { httpStatusCodes } = require("./helpers/httpstatuscodes.js");
 const usersRouter = require("./routes/usersRoutes");
 const cardsRouter = require("./routes/cardsRoutes");
 
+
+
 const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
@@ -23,6 +25,10 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 app.use(helmet());
 
 app.get("env") !== "test" && app.use(logger(formatsLogger));
+
+app.use(express.json());
+
+
 
 app.use(express.static("public"));
 
@@ -76,6 +82,7 @@ const options = {
 };
 
 const specs = swaggerJsDoc(options);
+
 
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(specs));
 

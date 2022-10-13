@@ -85,7 +85,7 @@ const getCardById = async (req, res, next) => {
 
 const addCard = async (req, res, next) => {
   try {
-    const userId = req.users?._id.toString();
+    const userId = req.users?._id;
     console.log(userId);
     const {
       id,

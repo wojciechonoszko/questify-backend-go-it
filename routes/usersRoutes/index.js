@@ -9,6 +9,9 @@ const {
 const limiter = require("../../helpers/reglimiter");
 
 
+const {EmailService} = require("../../services/email");
+
+
 /**
  * @swagger
  * components:
@@ -105,6 +108,20 @@ router.get("/verify/:token", ctrl.verifyUser);
 router.post("/signup", limiter, validateRegistrationUser, ctrl.registration);
 
 
+// router.post("/sendMail", async (req, res) => {
+//   try {
+//     const sent = await EmailService;
+//     console.log(sent);
+//     // const sent = true;
+//     if (sent) {
+//       res.send({ message: "email sent successfully" });
+//     }
+//   } catch (error) {
+//     throw new Error(error.message);
+//   }
+// });
+
+router.post("/sendMail", EmailService);
 /**
  * @swagger
  * /user/login:
