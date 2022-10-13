@@ -9,7 +9,7 @@ const {
 const limiter = require("../../helpers/reglimiter");
 
 
-const {EmailService} = require("../../services/email");
+const email = require("../../services/email");
 
 
 /**
@@ -121,7 +121,13 @@ router.post("/signup", limiter, validateRegistrationUser, ctrl.registration);
 //   }
 // });
 
-router.post("/sendMail", EmailService);
+router.post("/sendMail", async (req, res, next) => {
+  try {
+    res.json(await email.sendEmail(res.body));
+  } catch (err) {
+    next(err);
+  }
+});
 /**
  * @swagger
  * /user/login:

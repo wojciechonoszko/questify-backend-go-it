@@ -97,7 +97,7 @@ const mailGenerator = new MailGen({
   theme: "salted",
   product: {
     name: "Awesome App",
-    link: "http://localhost:8155",
+    link: "http://localhost:3000",
     // logo: your app logo url
   },
 });
@@ -141,17 +141,37 @@ require("fs").writeFileSync("preview.html", emailTemplate, "utf8");
 // module.exports = { EmailService };
 
 
-
-const EmailService = async () => {
-  const msg = {
+function getMessage() {
+  const body = "This is a test email using SendGrid from Node.js";
+  return {
     to: "wojciechonoszko@o2.pl",
     from: "wojciechonoszko@gmail.com",
-    subject: "Test verification email",
-    html: emailTemplate,
-    text: "https://google.com - link do google",
+    subject: "Test email with Node.js and SendGrid",
+    text: emailTemplate,
+    html: `<strong>${body}</strong>`,
   };
-  await sgMail.send(msg);
-  return true;
-};
+}
 
-module.exports = { EmailService };
+async function sendEmail() {
+  try {
+    await sgMail.send(getMessage());
+
+    console.log("Test email sent successfully");
+    return {
+      message: `Order confirmation email sent successfully for orderNr`,
+    };
+  } catch (error) {
+    console.error("Error sending test email");
+    console.error(error);
+    if (error.response) {
+      console.error(error.response.body);
+    }
+  }
+}
+
+// (async () => {
+//   console.log("Sending test email");
+//   await sendEmail();
+// })();
+
+module.exports = {sendEmail}
