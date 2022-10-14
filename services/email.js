@@ -21,33 +21,7 @@
 //     }
 //   }
 
-//   #createTemplateVerifyEmail(verifyToken, name) {
-//     const mailGenerator = new this.#GenerateTemplate({
-//       theme: "salted",
-//       product: {
-//         name: "Questify",
-//         link: "https://questify.netlify.app",
-//       },
-//     });
-//     const email = {
-//       body: {
-//         name,
-//         intro:
-//           'Welcome to Project "Questify"! We\'re very excited to have you on board.',
-//         action: {
-//           instructions: "To start questify your life, please click here:",
-//           button: {
-//             color: "#22BC66",
-//             text: "Confirm your account",
-//             // link: `${this.link}/users/verify/${verifyToken}`,
-//             link: `https://questifyapp.netlify.app/auth/${verifyToken}`,
-//           },
-//         },
-//       },
-//     };
-//     const emailBody = mailGenerator.generate(email);
-//     return emailBody;
-//   }
+
 
 //   async sendVerifyEmail(verifyToken, email, name) {
 //     this.#sender.setApiKey(process.env.SENDGRID_API_KEY);
@@ -93,62 +67,79 @@ require("dotenv").config();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const mailGenerator = new MailGen({
-  theme: "salted",
-  product: {
-    name: "Awesome App",
-    link: "http://localhost:3000",
-    // logo: your app logo url
-  },
-});
-
-const email = {
-  body: {
-    name: "Jon Doe",
-    intro: "Welcome to email verification",
-    action: {
-      instructions: "Please click the button below to verify your account",
-      button: {
-        color: "#33b5e5",
-        text: "Verify account",
-        link: "http://example.com/verify_account",
+  function createTemplateVerifyEmail(verifyToken, name) {
+    const mailGenerator = new MailGen({
+      theme: "salted",
+      product: {
+        name: "Questify",
+        // link: "https://questify.netlify.app",
+        link: "http://localhost:3000",
       },
-    },
-  },
-};
+    });
+    const email = {
+      body: {
+        name,
+        intro:
+          'Welcome to Project "Questify"! We\'re very excited to have you on board.',
+        action: {
+          instructions: "To start questify your life, please click here:",
+          button: {
+            color: "#22BC66",
+            text: "Confirm your account",
+            // link: `${this.link}/users/verify/${verifyToken}`,
+            // link: `https://www.google.pl`,
+            link: `http://localhost:3000/users/verify/${verifyToken}`,
+          },
+        },
+        outro:
+          "Need help, or have questions? Just reply to this email, we'd love to help.",
+      },
+    };
+    // const emailTemplate = mailGenerator.generate(email);
+    // return emailTemplate;
 
-const emailTemplate = mailGenerator.generate(email);
-require("fs").writeFileSync("preview.html", emailTemplate, "utf8");
+    const emailTemplate = mailGenerator.generate(email);
+    require("fs").writeFileSync("preview.html", emailTemplate, "utf8");
+    return emailTemplate
+  }
 
-// const msg = {
-//   to: "wojciechonoszko@o2.pl",
-//   from: "wojciechonoszko@gmail.com",
-//   subject: "Test verification email",
-//   html: emailTemplate,
-//   text: "https://google.com - link do google",
+// const mailGenerator = new MailGen({
+//   theme: "salted",
+//   product: {
+//     name: "Awesome App",
+//     link: "http://localhost:3000",
+//     // logo: your app logo url
+//   },
+// });
+
+// const email = {
+//   body: {
+//     name: "John Doe",
+//     intro: "Welcome to email verification",
+//     action: {
+//       instructions: "Please click the button below to verify your account",
+//       button: {
+//         color: "#33b5e5",
+//         text: "Verify account",
+//         link: "http://example.com/verify_account",
+//       },
+//     },
+//   },
 // };
 
-// const EmailService = async () => {
-//   try {
-//     sgMail.send(msg);
-//     console.log(msg);
-//     return
-//   } catch (error) {
-//     throw new Error(error.message);
-//   }
-// };
+// const emailTemplate = mailGenerator.generate(email);
+// require("fs").writeFileSync("preview.html", emailTemplate, "utf8");
 
-// module.exports = { EmailService };
 
 
 function getMessage() {
-  const body = "This is a test email using SendGrid from Node.js";
+  // const body = "This is a test email using SendGrid from Node.js";
   return {
     to: "wojciechonoszko@o2.pl",
     from: "wojciechonoszko@gmail.com",
     subject: "Test email with Node.js and SendGrid",
-    text: emailTemplate,
-    html: `<strong>${body}</strong>`,
+    html: createTemplateVerifyEmail(`W8FfcMueY2sBfgjNw-G_3`, `jupiter`),
+    // html: `<strong>${body}</strong>`,
   };
 }
 
