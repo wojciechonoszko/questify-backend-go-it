@@ -1,5 +1,7 @@
-const { AuthService, UsersService, EmailService } = require("../services");
+const { AuthService, UsersService } = require("../services");
 const { httpStatusCodes } = require("../helpers/httpstatuscodes");
+
+const emailing = require("../services/email");
 
 const authService = new AuthService();
 const usersService = new UsersService();
@@ -21,8 +23,10 @@ const registration = async (req, res, next) => {
     const { id, name, email, verifyTokenEmail } = newUser;
 
     try {
-      const emailService = new EmailService(process.env.NODE_ENV);
-      await emailService.sendVerifyEmail(verifyTokenEmail, email, name);
+      // const emailService = new EmailService(process.env.NODE_ENV);
+      // const emailService = 
+      await emailing.sendEmail(verifyTokenEmail, name, email);
+      // res.json(await emailing.sendEmail(res.body));
     } catch (error) {
       console.log(error.message);
     }

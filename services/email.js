@@ -67,7 +67,7 @@ require("dotenv").config();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-  function createTemplateVerifyEmail(verifyToken, name) {
+  function createTemplateVerifyEmail(verifyTokenEmail, name) {
     const mailGenerator = new MailGen({
       theme: "salted",
       product: {
@@ -88,7 +88,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
             text: "Confirm your account",
             // link: `${this.link}/users/verify/${verifyToken}`,
             // link: `https://www.google.pl`,
-            link: `http://localhost:3000/users/verify/${verifyToken}`,
+            link: `http://localhost:3000/auth/${verifyTokenEmail}`,
           },
         },
         outro:
@@ -132,20 +132,42 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
 
-function getMessage() {
+function getMessage(verifyTokenEmail, name, email) {
   // const body = "This is a test email using SendGrid from Node.js";
   return {
-    to: "wojciechonoszko@o2.pl",
+    // to: "wojciechonoszko@o2.pl",
+    to: email,
     from: "wojciechonoszko@gmail.com",
     subject: "Test email with Node.js and SendGrid",
-    html: createTemplateVerifyEmail(`W8FfcMueY2sBfgjNw-G_3`, `jupiter`),
+    html: createTemplateVerifyEmail(verifyTokenEmail, name),
     // html: `<strong>${body}</strong>`,
   };
 }
 
-async function sendEmail() {
+//
+
+// const getMessage = async (req, res, next) => {
+//   // const body = "This is a test email using SendGrid from Node.js";
+//   const { verifyToken, name } = req.body;
+//   return {
+//     to: "wojciechonoszko@o2.pl",
+//     from: "wojciechonoszko@gmail.com",
+//     subject: "Test email with Node.js and SendGrid",
+//     html: createTemplateVerifyEmail(`8AUW4ILVh9GJTLiYeJ-K1`, `jupiter`),
+//     html: createTemplateVerifyEmail(verifyToken, name),
+//     // html: `<strong>${body}</strong>`,
+//   };
+// }
+//
+
+
+
+async function sendEmail(verifyTokenEmail, name, email) {
+  // verifyTokenEmail = `njdIr20BVBJvCuGumFFYC`;
+  // name = `Gitara`;
+  // email = `wojciechonoszko@o2.pl`;
   try {
-    await sgMail.send(getMessage());
+    await sgMail.send(getMessage(verifyTokenEmail, name, email));
 
     console.log("Test email sent successfully");
     return {
