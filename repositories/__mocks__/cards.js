@@ -25,8 +25,10 @@ class CardsRepository {
   });
 
   create = jest.fn((userId, body) => {
-    cards.push({ ...body, id: "777000000000044444444666" });
-    return { ...body, id: "777000000000044444444666" };
+    // cards.push({ ...body, id: "777000000000044444444666" });
+    // return { ...body, id: "777000000000044444444666" };
+    cards.push({ ...body, userId });
+    return { ...body, userId };
   });
 
   remove = jest.fn((userId, idCard) => {

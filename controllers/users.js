@@ -72,7 +72,7 @@ const login = async (req, res, next) => {
 };
 
 const logout = async (req, res, next) => {
-  const id = req.user;
+  const id = req.user?.id;
   await authService.logout(id);
   return res.status(httpStatusCodes.NO_CONTENT).json({});
 };
@@ -132,8 +132,9 @@ const repeatEmailVerify = async (req, res, next) => {
     const user = await usersService.findByEmail(req.body.email);
     if (user) {
       const { name, verifyTokenEmail, email } = user;
-      const emailService = new EmailService(process.env.NODE_ENV);
-      await emailService.sendVerifyEmail(verifyTokenEmail, email, name);
+      // const emailService = new EmailService(process.env.NODE_ENV);
+      // await emailService.sendVerifyEmail(verifyTokenEmail, email, name);
+      await emailing.sendEmail(verifyTokenEmail, name, email);
       return res.status(httpStatusCodes.OK).json({
         status: "success",
         code: httpStatusCodes.OK,

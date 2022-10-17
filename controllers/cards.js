@@ -1,13 +1,15 @@
 const { httpStatusCodes } = require("../helpers/httpstatuscodes");
-const { CardsService } = require("../services");
+const { CardsService, AuthService } = require("../services");
 const cardsService = new CardsService();
+const authService = new AuthService();
+// const { UsersRepository } = require("../repositories");
 
 const listCards = async (req, res, next) => {
   try {
-    const userId = req.users?.id;
-    // const userId = `63499e16dd029a4a0c64a9eb`;
+    const userId = req.user?.id;
+    // const userId = `634d4b466a4f80346cacc1d0`;
     const query = req.query;
-    const { docs } = await cardsService.getAll(userId, query);
+    const { docs } = await cardsService.getAll(`634d4b466a4f80346cacc1d0`, query);
     const cards = docs.map(
       ({
         id,
@@ -86,9 +88,10 @@ const getCardById = async (req, res, next) => {
 
 const addCard = async (req, res, next) => {
   try {
-    // const userId = req.user?.id;
-    const { userId } = req.userId;
-    // const userId = ObjectId("63499e16dd029a4a0c64a9eb");
+    const userId = req.user?.id;
+    // const userIdToString = userId.toString();
+    // const { _id } = req.users;
+    // const userId = ObjectId("634d4b466a4f80346cacc1d0");
     console.log(userId);
     const {
       id,
@@ -118,20 +121,6 @@ const addCard = async (req, res, next) => {
   }
 };
 
-// async function addCard(req, res) {
-//   const newCard = {
-//     title: req.body.text,
-//     category: req.body.category,
-//     type: req.body.isChallenge,
-//     time: req.body.deadline,
-//     //       isActive: req.body.isActive ? "true" : "false",
-//     level: req.body.difficulty,
-//   };
-
-//   const result = await cardsService.create({ ...newCard, owner: req.user?.id });
-
-//   return res.status(201).json({ result });
-// }
 
 const removeCard = async (req, res, next) => {
   try {
