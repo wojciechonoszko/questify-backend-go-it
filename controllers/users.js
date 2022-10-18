@@ -47,6 +47,7 @@ const registration = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
+ 
   try {
     const result = await authService.login({ email, password });
     if (result?.user.verify && result?.token) {

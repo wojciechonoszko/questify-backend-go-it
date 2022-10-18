@@ -26,8 +26,6 @@ app.use(helmet());
 
 app.get("env") !== "test" && app.use(logger(formatsLogger));
 
-app.use(express.json());
-
 
 
 app.use(express.static("public"));
@@ -57,6 +55,11 @@ app.use(
 app.use(express.json({ limit: 100000 }));
 app.use(boolParser());
 
+// app.use(express.json());
+const bp = require("body-parser");
+
+app.use(bp.json());
+app.use(bp.urlencoded({ extended: true }));
 
 const swaggerDefinition = {
   openapi: "3.0.0",

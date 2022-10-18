@@ -1,13 +1,27 @@
 const { httpStatusCodes } = require("../helpers/httpstatuscodes");
-const { CardsService, AuthService } = require("../services");
+const { CardsService, UsersService } = require("../services");
 const cardsService = new CardsService();
-const authService = new AuthService();
-// const { UsersRepository } = require("../repositories");
+const { UsersRepository } = require("../repositories");
+const usersRepository = new UsersRepository();
+require("dotenv").config();
+const mongoose = require("mongoose");
+
+const usersService = new UsersService();
+
 
 const listCards = async (req, res, next) => {
   try {
     const userId = req.user?.id;
+    const { _id } = req.user;
     // const userId = `634d4b466a4f80346cacc1d0`;
+    // const user = await usersRepository.findByEmail(req.body.email);
+    // const  email  = req.body.email;
+    // const user = await usersService.findByEmail(email);
+    
+    console.log({_id});
+    
+    
+    
     const query = req.query;
     const { docs } = await cardsService.getAll(`634d4b466a4f80346cacc1d0`, query);
     const cards = docs.map(
