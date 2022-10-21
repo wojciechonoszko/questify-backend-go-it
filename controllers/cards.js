@@ -2,11 +2,13 @@ const { httpStatusCodes } = require("../helpers/httpstatuscodes");
 const { CardsService } = require("../services");
 const cardsService = new CardsService();
 
+
 const listCards = async (req, res, next) => {
   try {
-    const userId = req.user.id;
-   
-    console.log(userId);
+    
+    const userId = req.user?.id;
+    
+    console.log( userId );
     
     const query = req.query;
     const { docs } = await cardsService.getAll(userId, query);

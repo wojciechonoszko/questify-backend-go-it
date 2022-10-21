@@ -80,8 +80,10 @@ const logout = async (req, res, next) => {
 
 const getCurrent = async (req, res, next) => {
   try {
-    const token = await req.user?.token;
+    const token = await req.users?.token;
+    console.log(`to jest token obecnego uzytkownika: ${token}`)
     const user = await usersService.findByToken(token);
+    console.log(user);
     if (user) {
       const { email, name } = user;
       return res.status(httpStatusCodes.OK).json({
