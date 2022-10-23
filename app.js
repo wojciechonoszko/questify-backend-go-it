@@ -28,7 +28,7 @@ app.get("env") !== "test" && app.use(logger(formatsLogger));
 
 
 
-app.use(express.static("public"));
+// app.use(express.static("public"));
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -43,6 +43,7 @@ const limiter = rateLimit({
   },
 });
 app.use(limiter);
+app.use(express.json({ limit: 100000 }));
 
 app.use(
   cors({
@@ -52,7 +53,7 @@ app.use(
     optionsSuccessStatus: httpStatusCodes.NO_CONTENT,
   })
 );
-app.use(express.json({ limit: 100000 }));
+
 app.use(boolParser());
 
 // app.use(express.json());

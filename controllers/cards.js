@@ -8,6 +8,7 @@ const listCards = async (req, res, next) => {
     
     const userId = req.user?.id;
     
+    
     console.log( userId );
     
     const query = req.query;
