@@ -6,7 +6,7 @@ const { Difficulty, Category } = require("../helpers/constants");
 const cardSchema = new Schema(
   {
     owner: {
-      type: SchemaTypes.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "user",
     },
     isChallenge: {
