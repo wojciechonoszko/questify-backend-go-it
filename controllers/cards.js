@@ -6,10 +6,10 @@ const cardsService = new CardsService();
 const listCards = async (req, res, next) => {
   try {
     
-    const userId = req.user?.id;
+    // const userId = req.user?.id;
+    const userId = req.user?.id
     
-    
-    console.log( userId );
+    console.log( `this is id: ${typeof(userId)}` );
     
     const query = req.query;
     const { docs } = await cardsService.getAll(userId, query);
