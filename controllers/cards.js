@@ -9,14 +9,14 @@ const listCards = async (req, res, next) => {
   try {
     
     // const userId = req.user?.id;
-    const {userId} = req.user?._id ;
+    const { id: owner } = req.user;
   
     
-    console.log( `this is id: ${userId}` );
+    console.log( `this is id: ${owner}` );
     
     const query = req.query;
     
-    const { docs } = await cardsService.getAll({userId}, query);
+    const { docs } = await cardsService.getAll({owner}, query);
     const cards = docs.map(
       ({
         id,
