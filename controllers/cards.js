@@ -9,13 +9,14 @@ const listCards = async (req, res, next) => {
   try {
     
     // const userId = req.user?.id;
-    const userId = req.user?._id ;
+    const {userId} = req.user?._id ;
+  
     
     console.log( `this is id: ${userId}` );
     
     const query = req.query;
     
-    const { docs } = await cardsService.getAll(userId, query);
+    const { docs } = await cardsService.getAll({userId}, query);
     const cards = docs.map(
       ({
         id,
@@ -94,7 +95,7 @@ const getCardById = async (req, res, next) => {
 
 const addCard = async (req, res, next) => {
   try {
-    const userId = req.user?._id;
+    const userId = req.user?.id;
     // const userIdToString = userId.toString();
     // const { _id } = req.users;
     // const userId = ObjectId("634d4b466a4f80346cacc1d0");

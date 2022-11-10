@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
-const { Schema, model, SchemaTypes } = mongoose;
+const { Schema, model } = mongoose;
 const mongoosePaginate = require("mongoose-paginate-v2");
 const { Difficulty, Category } = require("../helpers/constants");
 
 const cardSchema = new Schema(
   {
-    owner: {
-      type: Schema.Types.ObjectId,
-      ref: "user",
-    },
+    // owner: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "user",
+    // },
+    owner: Schema.Types.ObjectId,
     isChallenge: {
       type: Boolean,
       default: false,
@@ -56,6 +57,6 @@ const cardSchema = new Schema(
 
 cardSchema.plugin(mongoosePaginate);
 
-const Card = model("card", cardSchema);
+const Card = model("card", cardSchema, "cards");
 
 module.exports = Card;
