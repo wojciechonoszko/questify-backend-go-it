@@ -5,11 +5,11 @@ const { Difficulty, Category } = require("../helpers/constants");
 
 const cardSchema = new Schema(
   {
-    // owner: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "user",
-    // },
-    owner: Schema.Types.ObjectId,
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
+    // owner: Schema.Types.ObjectId,
     isChallenge: {
       type: Boolean,
       default: false,
