@@ -15,6 +15,7 @@ passport.use(
     try {
       const service = new UsersService();
       const user = await service.findById(payload.id);
+      console.log(`payload ID: ${user}`)
       if (!user) {
         return done(
           new Error({

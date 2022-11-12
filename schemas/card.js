@@ -7,7 +7,7 @@ const cardSchema = new Schema(
   {
     owner: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "users",
     },
     // owner: Schema.Types.ObjectId,
     isChallenge: {

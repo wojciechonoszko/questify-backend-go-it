@@ -53,6 +53,6 @@ userSchema.methods.validPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-const User = model("user", userSchema, "users" );
+const User = model("users", userSchema, "users" );
 
 module.exports = User;

@@ -1,5 +1,8 @@
 const { CardsRepository } = require("../repositories");
 
+
+
+
 class CardsService {
   constructor() {
     this.repositories = { cards: new CardsRepository() };
@@ -33,3 +36,4 @@ class CardsService {
 }
 
 module.exports = CardsService;
+
