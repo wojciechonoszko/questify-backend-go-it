@@ -8,7 +8,7 @@ const listCards = async (req, res, next) => {
   try {
     
     // const userId = req.user.id;
-    const user = req.user
+    const user = req.db.id
   
     
     console.log( `this is id: ${user}` );
