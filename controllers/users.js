@@ -1,5 +1,7 @@
-const { AuthService, UsersService, EmailService } = require("../services");
+const { AuthService, UsersService } = require("../services");
 const { httpStatusCodes } = require("../helpers/httpstatuscodes");
+
+const emailing = require("../services/email");
 
 const authService = new AuthService();
 const usersService = new UsersService();
@@ -21,8 +23,10 @@ const registration = async (req, res, next) => {
     const { id, name, email, verifyTokenEmail } = newUser;
 
     try {
-      const emailService = new EmailService(process.env.NODE_ENV);
-      await emailService.sendVerifyEmail(verifyTokenEmail, email, name);
+      // const emailService = new EmailService(process.env.NODE_ENV);
+      // const emailService = 
+      await emailing.sendEmail(verifyTokenEmail, name, email);
+      // res.json(await emailing.sendEmail(res.body));
     } catch (error) {
       console.log(error.message);
     }
@@ -43,6 +47,7 @@ const registration = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
+ 
   try {
     const result = await authService.login({ email, password });
     if (result?.user.verify && result?.token) {
@@ -68,15 +73,17 @@ const login = async (req, res, next) => {
 };
 
 const logout = async (req, res, next) => {
-  const id = req.user.id;
+  const id = req.user?.id;
   await authService.logout(id);
   return res.status(httpStatusCodes.NO_CONTENT).json({});
 };
 
 const getCurrent = async (req, res, next) => {
   try {
-    const token = await req.user?.token;
+    const token = await req.users?.token;
+    console.log(`to jest token obecnego uzytkownika: ${token}`)
     const user = await usersService.findByToken(token);
+    console.log(user);
     if (user) {
       const { email, name } = user;
       return res.status(httpStatusCodes.OK).json({
@@ -128,8 +135,9 @@ const repeatEmailVerify = async (req, res, next) => {
     const user = await usersService.findByEmail(req.body.email);
     if (user) {
       const { name, verifyTokenEmail, email } = user;
-      const emailService = new EmailService(process.env.NODE_ENV);
-      await emailService.sendVerifyEmail(verifyTokenEmail, email, name);
+      // const emailService = new EmailService(process.env.NODE_ENV);
+      // await emailService.sendVerifyEmail(verifyTokenEmail, email, name);
+      await emailing.sendEmail(verifyTokenEmail, name, email);
       return res.status(httpStatusCodes.OK).json({
         status: "success",
         code: httpStatusCodes.OK,
