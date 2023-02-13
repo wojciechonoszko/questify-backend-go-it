@@ -10,7 +10,8 @@ class AuthService {
 
   async login({ email, password }) {
     const user = await this.repositories.users.findByEmail(email);
-    console.log(`This is user id: ${user.id}`);
+    console.log(`This is user id from auth.js: ${user.id}`);
+    console.log(`Email: ${user.email}`);
     if (!user) return null;
 
     if (!user.verify) {
@@ -41,6 +42,12 @@ class AuthService {
       return user;
     }
     return null;
+  }
+// ====================================
+  async getId(email) {
+    const user = await this.repositories.users.findByEmail(email);
+      return user;
+  
   }
 }
 

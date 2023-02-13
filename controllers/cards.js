@@ -1,17 +1,17 @@
 const { httpStatusCodes } = require("../helpers/httpstatuscodes");
-const { CardsService } = require("../services");
+const { CardsService, AuthService } = require("../services");
 const cardsService = new CardsService();
+const authService = new AuthService();
 
 
 
 
 const listCards = async (req, res, next) => {
   try {
+    console.log('!!!!!!!!!!!!!!!!!!');
+    const userId = authService.getId();
     
-    // const userId = req.user?.id;
-    const userId = req.user?._id ;
-    
-    console.log( `this is id: ${userId}` );
+    console.log( `this is id: ${userId}. Czy widać?` );
     
     const query = req.query;
     
@@ -94,6 +94,7 @@ const getCardById = async (req, res, next) => {
 
 const addCard = async (req, res, next) => {
   try {
+    console.log("I'm adding a card.");
     const userId = req.user?._id;
     // const userIdToString = userId.toString();
     // const { _id } = req.users;
