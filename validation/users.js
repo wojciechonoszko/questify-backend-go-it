@@ -35,5 +35,6 @@ module.exports.validateRegistrationUser = (req, res, next) => {
 };
 
 module.exports.validateLoginUser = (req, res, next) => {
+  console.log('Hey, Hey, users.js');
   return validate(schemaLoginUser, req.body, next);
 };

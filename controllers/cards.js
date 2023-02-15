@@ -1,7 +1,6 @@
 const { httpStatusCodes } = require("../helpers/httpstatuscodes");
-const { CardsService, AuthService } = require("../services");
+const { CardsService } = require("../services");
 const cardsService = new CardsService();
-const authService = new AuthService();
 
 
 
@@ -9,9 +8,11 @@ const authService = new AuthService();
 const listCards = async (req, res, next) => {
   try {
     console.log('!!!!!!!!!!!!!!!!!!');
-    const userId = authService.getId();
     
-    console.log( `this is id: ${userId}. Czy widać?` );
+
+    const userId = req.user?.id;
+
+    console.log(userId);
     
     const query = req.query;
     
@@ -127,6 +128,29 @@ const addCard = async (req, res, next) => {
     next(error);
   }
 };
+
+// const addCard = async (req, res, next) => {
+//   try {
+//     console.log("I'm adding a card.");
+//     const userId = req.user?._id;
+//     console.log(userId);
+//     const card = await cardsService.create(userId, req.body);
+//     const { _id, ...rest } = card;
+//     res.status(httpStatusCodes.CREATED).json({
+//       status: "success",
+//       code: httpStatusCodes.CREATED,
+//       message: "card success created",
+//       result: { _id, ...rest },
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+
+
+
+
 
 
 const removeCard = async (req, res, next) => {

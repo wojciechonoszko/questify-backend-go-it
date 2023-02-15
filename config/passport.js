@@ -40,31 +40,30 @@
 // ============================================
 
 const passport = require("passport");
-const JWTStrategy = require("passport-jwt").Strategy;
-const { ExtractJwt } = require("passport-jwt");
-const SECRET_KEY = process.env.JWT_SECRET_KEY;
+const jwt = require("jsonwebtoken");
 
+const passportJWT = require('passport-jwt');
+const User = require("../schemas/user");
+const ExtractJWT = passportJWT.ExtractJwt;
+const Strategy = passportJWT.Strategy;
+const secret = process.env.JWT_SECRET_KEY;
+
+const params = {
+  secretOrKey: secret,
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+}
 passport.use(
-  new JWTStrategy(
-    {
-      jwtFromRequest: ExtractJwt.fromHeader("authorization"),
-      secretOrKey: SECRET_KEY,
-    },
-    async (payload, done) => {
-      try {
-        // Pobierz użytkownika z bazy danych po ID
-        const user = await User.findById(payload.id);
+  new Strategy(params, function (payload, done) {
 
-        // Jeśli użytkownik nie istnieje, zwróć błąd
-        if (!user) {
-          return done(null, false);
-        }
-
-        // Jeśli użytkownik istnieje, dodaj go do obiektu request jako req.user
-        done(null, user);
-      } catch (error) {
-        done(error, false);
-      }
+    User.findOne({ _id: payload._id }).then((user) => {
+    if (!user) {
+      return done(new Error("User not found!"));
     }
-  )
-);
+    return done(null,user)
+  })
+    .catch((e) => {
+    done(e)
+  })
+  
+})
+)

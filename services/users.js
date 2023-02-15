@@ -7,6 +7,7 @@ class UsersService {
 
   async findById(id) {
     const data = await this.repositories.users.findById(id);
+    console.log(`This is userId: ${user.id} from users.js`);
     return data;
   }
 

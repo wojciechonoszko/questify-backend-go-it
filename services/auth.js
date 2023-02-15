@@ -43,12 +43,7 @@ class AuthService {
     }
     return null;
   }
-// ====================================
-  async getId(email) {
-    const user = await this.repositories.users.findByEmail(email);
-      return user;
-  
-  }
+
 }
 
 module.exports = AuthService;

@@ -5,11 +5,13 @@ const {
   validateRegistrationUser,
   validateLoginUser,
 } = require("../../validation/users");
-// const guard = require("../../helpers/guard");
+const guard = require("../../helpers/guard");
 const limiter = require("../../helpers/reglimiter");
 
 
 const email = require("../../services/email");
+
+
 
 
 /**
@@ -150,7 +152,9 @@ router.post("/sendMail", async (req, res, next) => {
  *       500:
  *         description: Some server error
  */
-router.post("/login", validateLoginUser, ctrl.login);
+
+
+router.post("/login", ctrl.login, guard, validateLoginUser);
 router.post("/logout", ctrl.logout);
 
 /**
