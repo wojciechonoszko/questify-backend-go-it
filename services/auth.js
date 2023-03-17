@@ -8,6 +8,12 @@ class AuthService {
     this.repositories = { users: new UsersRepository() };
   }
 
+  // async getUserID(email) {
+  //   const user = await this.repositories.users.findByEmail(email);
+  //   let id = user.id
+  //   return { id };
+  // };
+
   async login({ email, password }) {
     const user = await this.repositories.users.findByEmail(email);
     console.log(`This is user id from auth.js: ${user.id}`);

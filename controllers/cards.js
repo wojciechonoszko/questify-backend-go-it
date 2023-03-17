@@ -1,6 +1,7 @@
 const { httpStatusCodes } = require("../helpers/httpstatuscodes");
-const { CardsService } = require("../services");
+const { CardsService, AuthService } = require("../services");
 const cardsService = new CardsService();
+const authService = new AuthService()
 
 
 
@@ -8,15 +9,12 @@ const cardsService = new CardsService();
 const listCards = async (req, res, next) => {
   try {
     console.log('!!!!!!!!!!!!!!!!!!');
-    
 
-    const userId = req.user?.id;
-
-    console.log(userId);
+    const userId = authService.getUserID();
     
     const query = req.query;
     
-    const { docs } = await cardsService.getAll(userId, query);
+    const { docs } = await cardsService.getAll(user, query);
     const cards = docs.map(
       ({
         id,
