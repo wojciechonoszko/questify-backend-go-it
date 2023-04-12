@@ -10,11 +10,11 @@ const listCards = async (req, res, next) => {
   try {
     console.log('!!!!!!!!!!!!!!!!!!');
 
-    const userId = authService.getUserID();
+    const userId = req.user?.id;
     
     const query = req.query;
     
-    const { docs } = await cardsService.getAll(user, query);
+    const { docs } = await cardsService.getAll(userId, query);
     const cards = docs.map(
       ({
         id,

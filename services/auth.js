@@ -53,3 +53,56 @@ class AuthService {
 }
 
 module.exports = AuthService;
+
+// const { UsersRepository } = require("../repositories");
+// const jwt = require("jsonwebtoken");
+// require("dotenv").config();
+// const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+
+// const AuthService = () => {
+//   const repositories = { users: new UsersRepository() };
+
+//   const login = async ({ email, password }) => {
+//     const user = await repositories.users.findByEmail(email);
+//     console.log(`This is user id from auth.js: ${user.id}`);
+//     console.log(`Email: ${user.email}`);
+//     if (!user) return null;
+
+//     if (!user.verify) {
+//       const token = null;
+//       return { token, user };
+//     }
+
+//     const id = user.id;
+//     await logout(id);
+//     const isValidPassword = await user.validPassword(password);
+//     if (!isValidPassword) return null;
+
+//     const payload = { id };
+//     const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "6h" });
+//     await repositories.users.updateToken(id, token);
+
+//     return { token, user };
+//   }
+
+//   const logout = async (id) => {
+//     return await repositories.users.updateToken(id, null);
+//   }
+
+//   const verifyUser = async (token) => {
+//     const user = await repositories.users.findByVerifyTokenEmail(token);
+//     if (user) {
+//       await repositories.users.updateVerifyToken(user.id, true, null);
+//       return user;
+//     }
+//     return null;
+//   }
+
+//   return {
+//     login,
+//     logout,
+//     verifyUser,
+//   };
+// }
+
+// module.exports = AuthService();

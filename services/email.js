@@ -136,7 +136,7 @@ function getMessage(verifyTokenEmail, name, email) {
   // const body = "This is a test email using SendGrid from Node.js";
   return {
     // to: "wojciechonoszko@o2.pl",
-    to: email,
+    to: 'wojciechonoszko@gmail.com',
     from: "wojciechonoszko@gmail.com",
     subject: "Test email with Node.js and SendGrid",
     html: createTemplateVerifyEmail(verifyTokenEmail, name),
