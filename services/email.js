@@ -67,7 +67,7 @@ require("dotenv").config();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-  function createTemplateVerifyEmail(verifyTokenEmail, name) {
+function createTemplateVerifyEmail(verifyTokenEmail, name) {
     const mailGenerator = new MailGen({
       theme: "salted",
       product: {
